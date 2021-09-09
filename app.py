@@ -21,7 +21,7 @@ class VistaCita(Resource):
             "fechaDesde" : request.json["fechaDesde"],
             "fechaHasta" : request.json["fechaHasta"] 
         }
-        return request.json
+        return data
 
     def get(self, id_cita):
         data={
