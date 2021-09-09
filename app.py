@@ -3,22 +3,35 @@ from flask_restful import Resource,Api
 from flask import Flask
 from typing import Dict
 from flask import Flask
+import random
 
 
 def create_app(config_dict: Dict = {}):
     app = Flask(__name__)    
     return app
 
-class VistaPaciente(Resource):
-    def post(self, id_paciente):       
-        request.json["id_usuario"]=id_paciente;
+class VistaCita(Resource):
+    def post(self, id_cita):       
+        data={
+            "id" : id_cita,
+            "entidadTratante" : request.json["entidadTratante"],
+            "usuarioTratante" : request.json["usuarioTratante"],
+            "usuarioTomador" : request.json["usuarioTomador"],
+            "servicioOfertado" : request.json["servicioOfertado"],
+            "fechaDesde" : request.json["fechaDesde"],
+            "fechaHasta" : request.json["fechaHasta"] 
+        }
         return request.json
 
-    def get(self, id_paciente):
+    def get(self, id_cita):
         data={
-            "nombre" : "Alberto",
-            "contrasena" : "Perez",
-            "id" : id_paciente
+            "id" : id_cita,
+            "entidadTratante" : random.randint(100, 999),
+            "usuarioTratante" : random.randint(100, 999),
+            "usuarioTomador" : random.randint(100, 999),
+            "servicioOfertado" : random.randint(100, 999),
+            "fechaDesde" : "10-10-2021 08:00",
+            "fechaHasta" : "10-10-2021 08:30" 
         }
         return data
 
@@ -37,8 +50,8 @@ app_context = app.app_context()
 app_context.push()
 
 api = Api(app)
-api.add_resource(VistaPaciente, "/paciente/<int:id_paciente>")
-api.add_resource(HealthCheck, "/paciente/healtchek")
+api.add_resource(VistaCita, "/cita/<int:id_cita>")
+api.add_resource(HealthCheck, "/cita/healtchek")
 
 
 if __name__ == '__main__':
